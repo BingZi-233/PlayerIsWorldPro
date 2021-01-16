@@ -19,7 +19,9 @@ jobs:
         with:
           java-version: 1.8
       - name: 构建Gradle项目
-        run: ./gradlew build
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build
       - name: 上传构建
         uses: actions/upload-artifact@v2
         with:
