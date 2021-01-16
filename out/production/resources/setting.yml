@@ -1,0 +1,6 @@
+Database:
+  Type: LOCALE
+  url:
+    client: "mongodb://localhost"
+    database: "PlayerIsWorld"
+    collection: "PlayerIsWorld"

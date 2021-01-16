@@ -1,20 +1,10 @@
-# TabooLib SDK
+# PlayerIsWorld（基于Taboolib重构）
 
-## Settings
-```groovy
-taboolib {
-    tabooLibVersion = '5.45'
-    loaderVersion = '2.9'
-    classifier = null
-    // relocate package
-    relocate('io.izzel.taboolib', 'ink.ptms.taboolib')
-}
-```
+## 兼容插件列表
+- SlimeWorldManager
+> 作用：加快世界的生成以及加载过程，测试效果可以提升大约100%~400%的速度。
+> 同时也是BC跨服同步的必须插件，借助此插件可以实现多服务器使用相同的地图。
 
-## Release Source Code
-````groovy
-processResources {
-    from(sourceSets.main.allSource) {
-    exclude 'plugin.yml'
-}
-````
+## 制作者
+1. BingZi233（冰上云梦）
+![BingZi233头像](https://s3.ax1x.com/2021/01/17/srWFpj.jpg)

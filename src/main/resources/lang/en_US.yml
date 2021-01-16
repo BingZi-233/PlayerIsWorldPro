@@ -1,0 +1,6 @@
+Enable:
+  Language: 'System language: English'
+  Database: 'Database type is {0}'
+  SlimeWorldManager: 'SlimeWorldManager plug-in is starting a compatible program...'
+  SlimeWorldManagerIsNull: 'SlimeWorldManager plugin does not exist, the compatible process is being removed...'
+  SlimeWorldManagerDatabase: 'Leading SlimeWorldManager to use database {0}'
