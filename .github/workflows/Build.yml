@@ -18,10 +18,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: 获取Gradlew执行权限
+        run: chmod +x gradlew
       - name: 构建Gradle项目
-        uses: eskatos/gradle-command-action@v1
-        with:
-          arguments: build
+        run: ./gradlew build
       - name: 上传构建
         uses: actions/upload-artifact@v2
         with:
