@@ -21,7 +21,7 @@ jobs:
       - name: 获取Gradlew执行权限
         run: chmod +x gradlew
       - name: 构建Gradle项目
-        run: ./gradlew build
+        run: ./gradle/wrapper/gradlew build 
       - name: 上传构建
         uses: actions/upload-artifact@v2
         with:
