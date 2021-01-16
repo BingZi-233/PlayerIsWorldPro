@@ -18,44 +18,56 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: 获取Gradlew执行权限
-        run: chmod +x gradlew
-      - name: 构建Gradle项目
-        run: ./gradle/wrapper/gradlew build 
-      - name: 上传构建
-        uses: actions/upload-artifact@v2
-        with:
-          # Artifact name
-          name: PlayerIsWorldPro
-          # optional
-          # A file, directory or wildcard pattern that describes what to upload
-          path: build/libs/*.jar
-      - name: 压缩文件
-        run: |
-          zip -r PlayerIsWorldPro.zip build/libs/*.jar
-#      - name: Upload to release
-#        uses: JasonEtco/upload-to-release@v0.1.1
-#        with:
-#          args: PlayerIsWorld.zip application/zip
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 创建版本
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: Auto${{ github.run_id }}
-          release_name: ActionsAutoBuild
-          draft: false
-          prerelease: true
-      - name: 发布版本
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./PlayerIsWorldPro.zip
-          asset_name: PlayerIsWorldPro.zip
-          asset_content_type: application/zip
+      - name: Cache .gradle/caches
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: ${{ runner.os }}-gradle-
+        - name: Cache .gradle/wrapper
+          uses: actions/cache@v1
+          with:
+            path: ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/*.gradle') }}
+            restore-keys: ${{ runner.os }}-gradle-wrapper-
+        - name: 获取Gradlew执行权限
+          run: chmod +x gradlew
+        - name: 构建Gradle项目
+          run: ./gradlew build
+        - name: 上传构建
+          uses: actions/upload-artifact@v2
+          with:
+            # Artifact name
+            name: PlayerIsWorldPro
+            # optional
+            # A file, directory or wildcard pattern that describes what to upload
+            path: build/libs/*.jar
+        - name: 压缩文件
+          run: |
+            zip -r PlayerIsWorldPro.zip build/libs/*.jar
+        #      - name: Upload to release
+        #        uses: JasonEtco/upload-to-release@v0.1.1
+        #        with:
+        #          args: PlayerIsWorld.zip application/zip
+        #        env:
+        #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: 创建版本
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: Auto${{ github.run_id }}
+            release_name: ActionsAutoBuild
+            draft: false
+            prerelease: true
+        - name: 发布版本
+          id: upload-release-asset
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+            asset_path: ./PlayerIsWorldPro.zip
+            asset_name: PlayerIsWorldPro.zip
+            asset_content_type: application/zip
