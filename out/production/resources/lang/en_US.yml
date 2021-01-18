@@ -1,3 +1,7 @@
 Enable:
   Language: 'System language: English'
-  Database: 'Database type is {0}'
+  Database: 'Database type is %s'
+  SlimeWorldManager: 'SlimeWorldManager plug-in is starting a compatible program...'
+  SlimeWorldManagerIsNull: 'SlimeWorldManager plugin does not exist, the compatible process is being removed...'
+  SlimeWorldManagerDatabase: 'Leading SlimeWorldManager to use database %s'
+  SlimeWorldManagerDatabaseError: 'Failed to boot SlimeWorldManager, trying to boot using other boot! '

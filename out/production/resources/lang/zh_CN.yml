@@ -1,3 +1,7 @@
 Enable:
   Language: '系统语言环境为：中文'
-  Database: '当前使用的数据库为：{0}'
+  Database: '当前使用的数据库为：%s'
+  SlimeWorldManager: 'SlimeWorldManager插件正在启动兼容程序...'
+  SlimeWorldManagerIsNull: 'SlimeWorldManager插件不存在，正在移除兼容流程...'
+  SlimeWorldManagerDatabase: '正在引导SlimeWorldManager使用数据库%s'
+  SlimeWorldManagerDatabaseError: '引导SlimeWorldManager失败，正在尝试引导使用其他引导！'

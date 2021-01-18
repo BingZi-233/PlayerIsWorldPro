@@ -27,3 +27,19 @@ Settings:
       Type: LOCALE
     # 世界
     World:
+  PreloadWorld:
+    # 最大预载数量
+    Max: 5
+    # 预载世界名称长度
+    NameLength: 15
+    # 预载世界前缀（仅接受小写）
+    Prefix: "playerisworld"
+    WorldSetting:
+      # 开服是否载入
+      readOnly: true
+      allowMonsters: false
+      allowAnimals: false
+      difficulty: 1
+      pvp: false
+      enviroment: NORMAL
+      wolrdType: default
