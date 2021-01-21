@@ -39,7 +39,7 @@ Settings:
       readOnly: true
       allowMonsters: false
       allowAnimals: false
-      difficulty: 1
+      difficulty: easy
       pvp: false
       enviroment: NORMAL
       wolrdType: default

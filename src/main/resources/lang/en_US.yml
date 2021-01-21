@@ -1,3 +1,6 @@
+Load:
+  PreloadSetting: 'Preloading the configuration file! '
+  PreloadData: 'Preloading data files!'
 Enable:
   Language: 'System language: English'
   Database: 'Database type is %s'
@@ -5,4 +8,5 @@ Enable:
   SlimeWorldManagerIsNull: 'SlimeWorldManager plugin does not exist, the compatible process is being removed...'
   SlimeWorldManagerDatabase: 'Leading SlimeWorldManager to use database %s'
   SlimeWorldManagerBuildWorld: 'Building the SlimeWorldManger loading model...'
-  SlimeWorldManagerDatabaseError: 'Failed to boot SlimeWorldManager, trying to boot using other boot! '
+  SlimeWorldManagerBuildModerInfo: 'The current world template is successfully constructed!'
+  SlimeWorldManagerDatabaseError: 'Failed to guide SlimeWorldManager, please check SlimeWorldManger configuration! Currently using Bukkit to operate the world. '

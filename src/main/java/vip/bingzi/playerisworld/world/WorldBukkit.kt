@@ -14,7 +14,7 @@ class WorldBukkit : PIWWorld() {
     override fun buildWorld(int: Int): ArrayList<String> {
         var PreloadWorld = ArrayList<String>()
         for (i in 1..int) {
-            var randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") +
+            var randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
                     PIWUtil.getRandomString(PlayerIsWorldPro.setting.getInt("Settings.PreloadWorld.NameLength"))
             Bukkit.createWorld(WorldCreator(randomString))
             PreloadWorld.add(randomString)
@@ -28,9 +28,9 @@ class WorldBukkit : PIWWorld() {
      */
     override fun buildWorldSync(int: Int): ArrayList<String> {
         var ProloadWorld = ArrayList<String>()
-        object : BukkitRunnable(){
+        object : BukkitRunnable() {
             override fun run() {
-                object : BukkitRunnable(){
+                object : BukkitRunnable() {
                     override fun run() {
                         ProloadWorld.addAll(buildWorld(int))
                     }
@@ -44,7 +44,7 @@ class WorldBukkit : PIWWorld() {
      * 卸载世界
      */
     override fun unloadWorld(world: World) {
-        Bukkit.unloadWorld(world,true)
+        Bukkit.unloadWorld(world, true)
     }
 
     /**
@@ -54,9 +54,9 @@ class WorldBukkit : PIWWorld() {
         // 在已加载世界中寻找是否加载了。如果没有在已载入世界中找到，那么将不需要卸载！
         for (world in Bukkit.getWorlds()) {
             // 如果寻找到
-            if (world.name == worldName){
+            if (world.name == worldName) {
                 // 卸载世界
-                Bukkit.unloadWorld(worldName,true)
+                Bukkit.unloadWorld(worldName, true)
             }
         }
     }

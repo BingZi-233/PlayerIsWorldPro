@@ -2,13 +2,14 @@ package vip.bingzi.playerisworld
 
 import com.grinderwolf.swm.api.SlimePlugin
 import com.grinderwolf.swm.api.loaders.SlimeLoader
-import com.grinderwolf.swm.api.world.SlimeWorld
 import com.grinderwolf.swm.api.world.properties.SlimePropertyMap
 import io.izzel.taboolib.loader.Plugin
 import io.izzel.taboolib.module.config.TConfig
 import io.izzel.taboolib.module.inject.TInject
 import io.izzel.taboolib.module.locale.TLocale
 import org.bukkit.Bukkit
+import vip.bingzi.playerisworld.database.DatabaseLocale
+import vip.bingzi.playerisworld.database.DatabaseMongoDB
 import vip.bingzi.playerisworld.util.PIWObject
 import vip.bingzi.playerisworld.util.PIWObject.logger
 import vip.bingzi.playerisworld.world.PIWWorld
@@ -30,8 +31,11 @@ object PlayerIsWorldPro : Plugin() {
 
     // 创建SlimeLodaer对象,只有在检测到SlimeWorldManager插件运行的时候这个值才会被初始化
     lateinit var SlimeLoader: SlimeLoader
-    lateinit var BuildModel: SlimeWorld.SlimeProperties
-    lateinit var BuildMod: SlimePropertyMap
+
+    // 这个值在没有SlimeWorldManager的时候是不会被初始化的。
+    lateinit var BuildModel: SlimePropertyMap
+
+    // 世界载入方式
     lateinit var BuildWorld: PIWWorld
 
     override fun onLoad() {
@@ -45,8 +49,15 @@ object PlayerIsWorldPro : Plugin() {
         logger.info(TLocale.asString("Enable.Language"))
         // 输出数据库使用类型
         logger.info(TLocale.asString("Enable.Database").format(setting.getString("Database.Type")))
+        // 引导本地数据库使用类型，避免出现大量IF语句
+        when (setting.getString("Database.Type")) {
+            "LOCAL" -> DatabaseLocale()
+            "ONLINE" -> DatabaseMongoDB()
+            else -> DatabaseLocale()
+        }
         // 检测SlimeWorldManager插件是否存在（即被载入）
         if (SlimeWorldManager != null) {
+            var info = true
             logger.info(TLocale.asString("Enable.SlimeWorldManager"))
             logger.info(
                 TLocale.asString("Enable.SlimeWorldManagerDatabase")
@@ -64,18 +75,24 @@ object PlayerIsWorldPro : Plugin() {
                 )
             } catch (e: Exception) {
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerDatabaseError"))
+                info = false
             }
-            logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildWorld"))
-            BuildModel = SlimeWorld.SlimeProperties.builder()
-                .readOnly(setting.getBoolean("Settings.PreloadWorld.WorldSetting.readOnly"))
-                .allowMonsters(setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowMonsters"))
-                .allowAnimals(setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowAnimals"))
-                .difficulty(setting.getInt("Settings.PreloadWorld.WorldSetting.difficulty"))
-                .pvp(setting.getBoolean("Settings.PreloadWorld.WorldSetting.pvp"))
-                .environment(setting.getString("Settings.PreloadWorld.WorldSetting.enviroment"))
-                .build()
-            // 将世界生成交给SlimeWorldManage处理
-            BuildWorld = WorldSlimeWorldManager()
+            if (info) {
+                logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildWorld"))
+                // 对世界模型进行初始化
+                BuildModel = PIWObject.getSlimePropertyMap(
+                    setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowMonsters"),
+                    setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowAnimals"),
+                    setting.getString("Settings.PreloadWorld.WorldSetting.difficulty"),
+                    setting.getString("Settings.PreloadWorld.WorldSetting.enviroment"),
+                    setting.getBoolean("Settings.PreloadWorld.WorldSetting.pvp"),
+                    setting.getString("Settings.PreloadWorld.WorldSetting.wolrdType")
+                )
+                logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildModerInfo"))
+                BuildWorld = WorldSlimeWorldManager()
+            } else {
+                BuildWorld = WorldBukkit()
+            }
         } else {
             logger.info(TLocale.asString("SlimeWorldManagerIsNull"))
             // 将世界生成交给Bukkit处理

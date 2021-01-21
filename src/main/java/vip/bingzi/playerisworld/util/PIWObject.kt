@@ -1,24 +1,16 @@
-`package vip.bingzi.playerisworld.util
+package vip.bingzi.playerisworld.util
 
+import com.grinderwolf.swm.api.world.properties.SlimeProperties
 import com.grinderwolf.swm.api.world.properties.SlimePropertyMap
 import org.bukkit.entity.Player
 import vip.bingzi.playerisworld.PlayerIsWorldPro
 import vip.bingzi.playerisworld.database.Database
-import vip.bingzi.playerisworld.database.DatabaseLocale
-import vip.bingzi.playerisworld.database.DatabaseMongoDB
 import java.util.logging.Logger
 
 object PIWObject {
     // 日志
     val logger: Logger = PlayerIsWorldPro.plugin.logger
-    private val database = init()
-    private fun init(): Database {
-        return when (PlayerIsWorldPro.setting.getString("Database.Type")) {
-            "LOCAL" -> DatabaseLocale()
-            "ONLINE" -> DatabaseMongoDB()
-            else -> DatabaseLocale()
-        }
-    }
+    lateinit var database : Database
 
     /**
      * 获取预载世界列表
@@ -75,14 +67,29 @@ object PIWObject {
         download["PlayerIsWorld.List.WorldName"] = WorldName
     }
 
-    fun setSlimePropertyMap(
+    fun getSlimePropertyMap(
         allowMonsters: Boolean,
         allowAnimals: Boolean,
-        difficulty: Int,
-        environment: String,
+        difficulty: String?,
+        environment: String?,
         pvp: Boolean,
-        worldType: String
+        worldType: String?
     ): SlimePropertyMap {
-
+        PlayerIsWorldPro.setting.release()
+        // 对世界模板进行设置
+        var slimePropertyMap = SlimePropertyMap()
+        // 设置世界模板会不会生成怪物
+        slimePropertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, allowMonsters)
+        // 设置世界模板会不会生成动物
+        slimePropertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, allowAnimals)
+        // 设置世界模板难度
+        slimePropertyMap.setString(SlimeProperties.DIFFICULTY, difficulty)
+        // 设置世界模板可否PVP
+        slimePropertyMap.setBoolean(SlimeProperties.PVP, pvp)
+        // 设置世界模板类型
+        slimePropertyMap.setString(SlimeProperties.ENVIRONMENT, environment)
+        // 设置世界模板世界生成方式
+        slimePropertyMap.setString(SlimeProperties.WORLD_TYPE, worldType)
+        return slimePropertyMap
     }
 }
