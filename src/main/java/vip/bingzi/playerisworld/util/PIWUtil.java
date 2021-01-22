@@ -11,6 +11,7 @@ public class PIWUtil {
      * @return 随机生成的字符串
      */
     // 随机字符串生成器，CV过来的。不要吐槽我，这个部分我没研究。
+    @SuppressWarnings("SpellCheckingInspection")
     public static String getRandomString(int length) {
         //定义一个字符串（A-Z，a-z，0-9）即62位；
         String str = "zxcvbnmlkjhgfdsaqwertyuiop1234567890";

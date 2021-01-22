@@ -10,7 +10,8 @@ import java.util.logging.Logger
 object PIWObject {
     // 日志
     val logger: Logger = PlayerIsWorldPro.plugin.logger
-    lateinit var database : Database
+    // 仅对内部可见，方式从外部更改了加载方式
+    private lateinit var database : Database
 
     /**
      * 获取预载世界列表
@@ -23,7 +24,7 @@ object PIWObject {
      * 在预载世界中追加单个指定世界名
      */
     fun addPreloadWorld(string: String) {
-        var preloadWorld = getPreloadWorld()
+        val preloadWorld = getPreloadWorld()
         preloadWorld.add(string)
         PlayerIsWorldPro.data.set("PreloadWorld", preloadWorld)
         PlayerIsWorldPro.data.saveToFile()
@@ -33,7 +34,7 @@ object PIWObject {
      * 在预载世界中追加多个指定世界名
      */
     fun addPreloadWorld(arrayList: ArrayList<String>) {
-        var preloadWorld = getPreloadWorld()
+        val preloadWorld = getPreloadWorld()
         preloadWorld.addAll(arrayList)
         PlayerIsWorldPro.data.set("PreloadWorld", preloadWorld)
         PlayerIsWorldPro.data.saveToFile()
@@ -43,7 +44,7 @@ object PIWObject {
      * 在预载世界列表中移除指定世界名
      */
     fun delPreloadWorld(string: String) {
-        var preloadWorld = getPreloadWorld()
+        val preloadWorld = getPreloadWorld()
         preloadWorld.remove(string)
         PlayerIsWorldPro.data.set("PreloadWorld", preloadWorld)
         PlayerIsWorldPro.data.saveToFile()
@@ -77,7 +78,7 @@ object PIWObject {
     ): SlimePropertyMap {
         PlayerIsWorldPro.setting.release()
         // 对世界模板进行设置
-        var slimePropertyMap = SlimePropertyMap()
+        val slimePropertyMap = SlimePropertyMap()
         // 设置世界模板会不会生成怪物
         slimePropertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, allowMonsters)
         // 设置世界模板会不会生成动物

@@ -41,5 +41,5 @@ Settings:
       allowAnimals: false
       difficulty: easy
       pvp: false
-      enviroment: NORMAL
-      wolrdType: default
+      environment: NORMAL
+      worldType: default

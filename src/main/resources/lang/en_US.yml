@@ -9,4 +9,7 @@ Enable:
   SlimeWorldManagerDatabase: 'Leading SlimeWorldManager to use database %s'
   SlimeWorldManagerBuildWorld: 'Building the SlimeWorldManger loading model...'
   SlimeWorldManagerBuildModerInfo: 'The current world template is successfully constructed!'
-  SlimeWorldManagerDatabaseError: 'Failed to guide SlimeWorldManager, please check SlimeWorldManger configuration! Currently using Bukkit to operate the world. '
+  SlimeWorldManagerDatabaseError: 'The preferred SlimeWorldManager storage method %s failed to boot! '
+  SlimeWorldManagerTryDatabase: 'Trying to use %s as a boot method...'
+  SlimeWorldManagerYes: 'Success'
+  SlimeWorldManagerNo: 'Failed'

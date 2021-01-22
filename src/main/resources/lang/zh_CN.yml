@@ -9,4 +9,7 @@ Enable:
   SlimeWorldManagerDatabase: '正在引导SlimeWorldManager使用数据库%s'
   SlimeWorldManagerBuildWorld: '正在构建SlimeWorldManger加载模型...'
   SlimeWorldManagerBuildModerInfo: '当前世界模板构建成功！'
-  SlimeWorldManagerDatabaseError: '引导SlimeWorldManager失败，请检测SlimeWorldManger配置！当前正在使用Bukkit操作世界。'
+  SlimeWorldManagerDatabaseError: '首选SlimeWorldManager储存方式%s引导失败！'
+  SlimeWorldManagerTryDatabase: '正在尝试使用%s作为引导方式...'
+  SlimeWorldManagerYes: '成功'
+  SlimeWorldManagerNo: '失败'

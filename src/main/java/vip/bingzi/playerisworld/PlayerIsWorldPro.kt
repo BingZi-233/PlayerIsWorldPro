@@ -29,14 +29,14 @@ object PlayerIsWorldPro : Plugin() {
     // 创建SlimeWorldManager对象，方便后续进行调用
     val SlimeWorldManager = Bukkit.getPluginManager().getPlugin("SlimeWorldManager") as SlimePlugin?
 
-    // 创建SlimeLodaer对象,只有在检测到SlimeWorldManager插件运行的时候这个值才会被初始化
+    // 创建SlimeLoader对象,只有在检测到SlimeWorldManager插件运行的时候这个值才会被初始化
     lateinit var SlimeLoader: SlimeLoader
 
     // 这个值在没有SlimeWorldManager的时候是不会被初始化的。
     lateinit var BuildModel: SlimePropertyMap
 
     // 世界载入方式
-    lateinit var BuildWorld: PIWWorld
+    private lateinit var BuildWorld: PIWWorld
 
     override fun onLoad() {
         logger.info("Load process...")
@@ -63,19 +63,36 @@ object PlayerIsWorldPro : Plugin() {
                 TLocale.asString("Enable.SlimeWorldManagerDatabase")
                     .format(setting.getString("Settings.SlimeWorldManager.Database.Type"))
             )
-            // 引导数据库类型
+            val set = when (setting.getString("Settings.SlimeWorldManager.Database.Type")) {
+                "LOCALE" -> "sqlite"
+                "ONLINE" -> "mongodb"
+                "MYSQL" -> "mysql"
+                else -> "sqlite"
+            }
+            val setBack = arrayListOf("sqlite", "mysql", "mongodb")
             try {
-                SlimeLoader = SlimeWorldManager.getLoader(
-                    when (setting.getString("Settings.SlimeWorldManager.Database.Type")) {
-                        "LOCALE" -> "sqlite"
-                        "ONLINE" -> "mongodb"
-                        "MYSQL" -> "mysql"
-                        else -> "sqlite"
-                    }
-                )
+                SlimeLoader = SlimeWorldManager.getLoader(set)
             } catch (e: Exception) {
-                logger.info(TLocale.asString("Enable.SlimeWorldManagerDatabaseError"))
+                logger.info(TLocale.asString("Enable.SlimeWorldManagerDatabaseError").format(set))
+                // 移除当前已经尝试的方法
+                setBack.remove(set)
+                // 悲观情况，大概率其他两种也无法正常运行
                 info = false
+                // 尝试使用另外两种方法进行操作
+                for (back in setBack){
+                    try {
+                        logger.info(TLocale.asString("Enable.SlimeWorldManagerTryDatabase").format(back))
+                        // 尝试进行注册
+                        SlimeLoader = SlimeWorldManager.getLoader(back)
+                    } catch (e: Exception) {
+                        // 跳过下面代码
+                        logger.info(TLocale.asString("Enable.SlimeWorldManagerNo"))
+                        continue
+                    }
+                    // 如果发现有执行成功的模式，则将状态调整为True
+                    logger.info(TLocale.asString("Enable.SlimeWorldManagerYes"))
+                    info = true
+                }
             }
             if (info) {
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildWorld"))
@@ -84,9 +101,9 @@ object PlayerIsWorldPro : Plugin() {
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowMonsters"),
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowAnimals"),
                     setting.getString("Settings.PreloadWorld.WorldSetting.difficulty"),
-                    setting.getString("Settings.PreloadWorld.WorldSetting.enviroment"),
+                    setting.getString("Settings.PreloadWorld.WorldSetting.environment"),
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.pvp"),
-                    setting.getString("Settings.PreloadWorld.WorldSetting.wolrdType")
+                    setting.getString("Settings.PreloadWorld.WorldSetting.worldType")
                 )
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildModerInfo"))
                 BuildWorld = WorldSlimeWorldManager()
@@ -102,9 +119,9 @@ object PlayerIsWorldPro : Plugin() {
         开始世界生成流程
          */
         // 获取需要增加的数量
-        val PreloadSize = setting.getInt("Settings.PreloadWorld.Max") - data.getStringList("PreloadWorld").size
+        val preloadSize = setting.getInt("Settings.PreloadWorld.Max") - data.getStringList("PreloadWorld").size
         // 进行世界生成
-        var buildWorld = BuildWorld.buildWorld(PreloadSize)
+        val buildWorld = BuildWorld.buildWorld(preloadSize)
         // 将世界名追加到预载世界列表中
         PIWObject.addPreloadWorld(buildWorld)
         logger.info("Enabled process end!")

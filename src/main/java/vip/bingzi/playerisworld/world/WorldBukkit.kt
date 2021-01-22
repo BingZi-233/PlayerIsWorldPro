@@ -12,14 +12,14 @@ class WorldBukkit : PIWWorld() {
      * 构建世界
      */
     override fun buildWorld(int: Int): ArrayList<String> {
-        var PreloadWorld = ArrayList<String>()
+        val preloadWorld = ArrayList<String>()
         for (i in 1..int) {
-            var randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
+            val randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
                     PIWUtil.getRandomString(PlayerIsWorldPro.setting.getInt("Settings.PreloadWorld.NameLength"))
             Bukkit.createWorld(WorldCreator(randomString))
-            PreloadWorld.add(randomString)
+            preloadWorld.add(randomString)
         }
-        return PreloadWorld
+        return preloadWorld
 
     }
 
@@ -27,17 +27,17 @@ class WorldBukkit : PIWWorld() {
      * 构建世界（异步）
      */
     override fun buildWorldSync(int: Int): ArrayList<String> {
-        var ProloadWorld = ArrayList<String>()
+        val preloadWorld = ArrayList<String>()
         object : BukkitRunnable() {
             override fun run() {
                 object : BukkitRunnable() {
                     override fun run() {
-                        ProloadWorld.addAll(buildWorld(int))
+                        preloadWorld.addAll(buildWorld(int))
                     }
                 }.runTask(PlayerIsWorldPro.plugin)
             }
         }.runTaskAsynchronously(PlayerIsWorldPro.plugin)
-        return ProloadWorld
+        return preloadWorld
     }
 
     /**

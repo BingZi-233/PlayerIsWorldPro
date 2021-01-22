@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused", "unused", "unused", "unused", "unused", "unused")
+
 package vip.bingzi.playerisworld.command
 
 import io.izzel.taboolib.module.command.base.*

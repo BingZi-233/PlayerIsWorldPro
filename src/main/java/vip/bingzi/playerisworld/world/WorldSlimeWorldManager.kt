@@ -7,40 +7,41 @@ import vip.bingzi.playerisworld.util.PIWUtil
 
 class WorldSlimeWorldManager : PIWWorld() {
     // SlimeWorldManager插件对象
-    val slimeWorldManager = PlayerIsWorldPro.SlimeWorldManager
+    private val slimeWorldManager = PlayerIsWorldPro.SlimeWorldManager
 
     // SlimeWorldManager的储存对象
-    val slimeLoader = PlayerIsWorldPro.SlimeLoader
-    val buildModel = PlayerIsWorldPro.BuildModel
+    private val slimeLoader = PlayerIsWorldPro.SlimeLoader
+    private val buildModel = PlayerIsWorldPro.BuildModel
 
     // SlimeWorldManager的世界生成对象
     override fun buildWorld(int: Int): ArrayList<String> {
-        var PreloadWorld = ArrayList<String>()
+        val preloadWorld = ArrayList<String>()
         val readOnly = PlayerIsWorldPro.setting.getBoolean("Settings.PreloadWorld.WorldSetting.readOnly")
         for (i in 1..int) {
-            var randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
+            val randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
                     PIWUtil.getRandomString(PlayerIsWorldPro.setting.getInt("Settings.PreloadWorld.NameLength"))
             slimeWorldManager?.loadWorld(slimeLoader, randomString, readOnly, buildModel)
-            PreloadWorld.add(randomString)
+            preloadWorld.add(randomString)
         }
-        return PreloadWorld
+        return preloadWorld
     }
 
     override fun buildWorldSync(int: Int): ArrayList<String> {
-        var PreloadWorld = ArrayList<String>()
+        val preloadWorld = ArrayList<String>()
         object : BukkitRunnable() {
             override fun run() {
                 object : BukkitRunnable() {
                     override fun run() {
-                        PreloadWorld.addAll(buildWorld(int))
+                        preloadWorld.addAll(buildWorld(int))
                     }
                 }.runTask(PlayerIsWorldPro.plugin)
             }
         }.runTaskAsynchronously(PlayerIsWorldPro.plugin)
-        return PreloadWorld
+        return preloadWorld
     }
 
     override fun unloadWorld(world: World) {
+
         TODO("Not yet implemented")
     }
 
