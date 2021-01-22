@@ -4,6 +4,7 @@ Load:
 Enable:
   Language: '系统语言环境为：中文'
   Database: '当前使用的数据库为：%s'
+  LoggerInfo: '日志等级为：%s'
   SlimeWorldManager: 'SlimeWorldManager插件正在启动兼容程序...'
   SlimeWorldManagerIsNull: 'SlimeWorldManager插件不存在，正在移除兼容流程...'
   SlimeWorldManagerDatabase: '正在引导SlimeWorldManager使用数据库%s'
@@ -13,3 +14,4 @@ Enable:
   SlimeWorldManagerTryDatabase: '正在尝试使用%s作为引导方式...'
   SlimeWorldManagerYes: '成功'
   SlimeWorldManagerNo: '失败'
+  SlimeWorldManagerSuccess: '对SlimeWorldManager引导失败，将使用Bukkit进行世界构建！'

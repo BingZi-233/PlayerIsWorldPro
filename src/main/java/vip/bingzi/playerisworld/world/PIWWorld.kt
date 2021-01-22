@@ -17,6 +17,16 @@ abstract class PIWWorld {
     abstract fun buildWorldSync(int: Int): ArrayList<String>
 
     /**
+     * 载入世界
+     */
+    abstract fun loadWorld(worldName: String)
+
+    /**
+     * 调度器载入世界
+     */
+    abstract fun loadWorldSync(worldName: String)
+
+    /**
      * 世界卸载（世界对象）
      */
     abstract fun unloadWorld(world: World)

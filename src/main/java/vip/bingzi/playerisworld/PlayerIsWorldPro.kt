@@ -15,6 +15,7 @@ import vip.bingzi.playerisworld.util.PIWObject.logger
 import vip.bingzi.playerisworld.world.PIWWorld
 import vip.bingzi.playerisworld.world.WorldBukkit
 import vip.bingzi.playerisworld.world.WorldSlimeWorldManager
+import java.util.logging.Level
 
 object PlayerIsWorldPro : Plugin() {
     // 配置文件释放
@@ -37,14 +38,21 @@ object PlayerIsWorldPro : Plugin() {
 
     // 世界载入方式
     private lateinit var BuildWorld: PIWWorld
-
     override fun onLoad() {
-        logger.info("Load process...")
-        logger.info("Load process end!")
     }
 
     override fun onEnable() {
         logger.info("Enabled process...")
+        // 设置日志输出等级
+        logger.level = when (setting.getString("Settings.Logger")) {
+            "INFO" -> Level.INFO
+            "FINE" -> Level.FINE
+            "ALL" -> Level.ALL
+            "OFF" -> Level.OFF
+            "SEVERE" -> Level.SEVERE
+            else -> Level.INFO
+        }
+        logger.info(TLocale.asString("Enable.LoggerInfo").format(logger.level.name))
         // 输出系统语言环境
         logger.info(TLocale.asString("Enable.Language"))
         // 输出数据库使用类型
@@ -73,15 +81,15 @@ object PlayerIsWorldPro : Plugin() {
             try {
                 SlimeLoader = SlimeWorldManager.getLoader(set)
             } catch (e: Exception) {
-                logger.info(TLocale.asString("Enable.SlimeWorldManagerDatabaseError").format(set))
+                logger.warning(TLocale.asString("Enable.SlimeWorldManagerDatabaseError").format(set))
                 // 移除当前已经尝试的方法
                 setBack.remove(set)
                 // 悲观情况，大概率其他两种也无法正常运行
                 info = false
                 // 尝试使用另外两种方法进行操作
-                for (back in setBack){
+                for (back in setBack) {
                     try {
-                        logger.info(TLocale.asString("Enable.SlimeWorldManagerTryDatabase").format(back))
+                        logger.warning(TLocale.asString("Enable.SlimeWorldManagerTryDatabase").format(back))
                         // 尝试进行注册
                         SlimeLoader = SlimeWorldManager.getLoader(back)
                     } catch (e: Exception) {
@@ -92,12 +100,14 @@ object PlayerIsWorldPro : Plugin() {
                     // 如果发现有执行成功的模式，则将状态调整为True
                     logger.info(TLocale.asString("Enable.SlimeWorldManagerYes"))
                     info = true
+                    // 避免过多的尝试
+                    break
                 }
             }
             if (info) {
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildWorld"))
                 // 对世界模型进行初始化
-                BuildModel = PIWObject.getSlimePropertyMap(
+                BuildModel = PIWObject.getSlimeBuildModer(
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowMonsters"),
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowAnimals"),
                     setting.getString("Settings.PreloadWorld.WorldSetting.difficulty"),
@@ -108,6 +118,7 @@ object PlayerIsWorldPro : Plugin() {
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildModerInfo"))
                 BuildWorld = WorldSlimeWorldManager()
             } else {
+                logger.severe(TLocale.asString("Enable.SlimeWorldManagerSuccess"))
                 BuildWorld = WorldBukkit()
             }
         } else {

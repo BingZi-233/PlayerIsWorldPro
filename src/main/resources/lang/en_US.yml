@@ -4,6 +4,7 @@ Load:
 Enable:
   Language: 'System language: English'
   Database: 'Database type is %s'
+  LoggerInfo: 'The log level is: %s'
   SlimeWorldManager: 'SlimeWorldManager plug-in is starting a compatible program...'
   SlimeWorldManagerIsNull: 'SlimeWorldManager plugin does not exist, the compatible process is being removed...'
   SlimeWorldManagerDatabase: 'Leading SlimeWorldManager to use database %s'
@@ -13,3 +14,4 @@ Enable:
   SlimeWorldManagerTryDatabase: 'Trying to use %s as a boot method...'
   SlimeWorldManagerYes: 'Success'
   SlimeWorldManagerNo: 'Failed'
+  SlimeWorldManagerSuccess: 'Failed to guide SlimeWorldManager, Bukkit will be used to build the world! '

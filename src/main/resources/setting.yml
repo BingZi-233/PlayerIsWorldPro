@@ -15,6 +15,13 @@ Database:
     Collection: "PlayerIsWorld"
 # 设置
 Settings:
+  # 可选项目
+  # 1. INFO   -   正常运行的日志
+  # 2. FINE   -   更加详细的日志
+  # 3. ALL    -   全部日志情况
+  # 4. OFF    -   关闭所有日志
+  # 5. SEVERE -   仅十分严重的日志
+  Logger: INFO
   # 针对于SlimeWorldManager插件的兼容设置
   SlimeWorldManager:
     # 数据库

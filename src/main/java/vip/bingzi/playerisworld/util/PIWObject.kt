@@ -10,8 +10,9 @@ import java.util.logging.Logger
 object PIWObject {
     // 日志
     val logger: Logger = PlayerIsWorldPro.plugin.logger
+
     // 仅对内部可见，方式从外部更改了加载方式
-    private lateinit var database : Database
+    private lateinit var database: Database
 
     /**
      * 获取预载世界列表
@@ -68,13 +69,13 @@ object PIWObject {
         download["PlayerIsWorld.List.WorldName"] = WorldName
     }
 
-    fun getSlimePropertyMap(
+    fun getSlimeBuildModer(
         allowMonsters: Boolean,
         allowAnimals: Boolean,
         difficulty: String?,
         environment: String?,
         pvp: Boolean,
-        worldType: String?
+        worldType: String?,
     ): SlimePropertyMap {
         PlayerIsWorldPro.setting.release()
         // 对世界模板进行设置
