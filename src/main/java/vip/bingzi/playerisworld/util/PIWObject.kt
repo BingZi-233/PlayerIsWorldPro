@@ -58,7 +58,7 @@ object PIWObject {
         // 获取对应玩家的数据库
         val download = database.download(player!!)
         // 如果未查询到玩家世界，则返回false
-        return download["PlayerIsWorld.List.WorldName", true]
+        return download["PlayerIsWorld.List.WorldName", null]
     }
 
     /**

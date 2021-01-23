@@ -10,6 +10,7 @@ import io.izzel.taboolib.module.locale.TLocale
 import org.bukkit.Bukkit
 import vip.bingzi.playerisworld.database.DatabaseLocale
 import vip.bingzi.playerisworld.database.DatabaseMongoDB
+import vip.bingzi.playerisworld.logger.PIWLogger
 import vip.bingzi.playerisworld.util.PIWObject
 import vip.bingzi.playerisworld.util.PIWObject.logger
 import vip.bingzi.playerisworld.world.PIWWorld
@@ -35,18 +36,18 @@ object PlayerIsWorldPro : Plugin() {
 
     // 这个值在没有SlimeWorldManager的时候是不会被初始化的。
     lateinit var BuildModel: SlimePropertyMap
+    val DEBUG = PIWLogger("DEBUG", 1500)
 
     // 世界载入方式
-    private lateinit var BuildWorld: PIWWorld
+    lateinit var BuildWorld: PIWWorld
     override fun onLoad() {
     }
 
     override fun onEnable() {
-        logger.info("Enabled process...")
+        logger.info(TLocale.asString("Enable.Start"))
         // 设置日志输出等级
         logger.level = when (setting.getString("Settings.Logger")) {
             "INFO" -> Level.INFO
-            "FINE" -> Level.FINE
             "ALL" -> Level.ALL
             "OFF" -> Level.OFF
             "SEVERE" -> Level.SEVERE
@@ -131,11 +132,14 @@ object PlayerIsWorldPro : Plugin() {
          */
         // 获取需要增加的数量
         val preloadSize = setting.getInt("Settings.PreloadWorld.Max") - data.getStringList("PreloadWorld").size
+        logger.info(TLocale.asString("Enable.PreloadWorldSize").format(preloadSize))
+        logger.info(TLocale.asString("Enable.PreloadBuildStart"))
         // 进行世界生成
         val buildWorld = BuildWorld.buildWorld(preloadSize)
         // 将世界名追加到预载世界列表中
         PIWObject.addPreloadWorld(buildWorld)
-        logger.info("Enabled process end!")
+        logger.info(TLocale.asString("Enable.PreloadBuildEnd").format(buildWorld))
+        logger.info(TLocale.asString("Enable.End"))
     }
 
     override fun onDisable() {

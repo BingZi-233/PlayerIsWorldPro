@@ -23,7 +23,7 @@ class WorldSlimeWorldManager : PIWWorld() {
         for (i in 1..int) {
             val randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
                     PIWUtil.getRandomString(PlayerIsWorldPro.setting.getInt("Settings.PreloadWorld.NameLength"))
-            slimeWorldManager?.loadWorld(slimeLoader, randomString, readOnly, buildModel)
+            slimeWorldManager?.createEmptyWorld(slimeLoader, randomString, readOnly, buildModel)
             preloadWorld.add(randomString)
         }
         return preloadWorld

@@ -2,6 +2,8 @@ Load:
   PreloadSetting: '正在预载配置文件!'
   PreloadData: '正在预载数据文件!'
 Enable:
+  Start: '正在进行启动...'
+  End: '启动结束！'
   Language: '系统语言环境为：中文'
   Database: '当前使用的数据库为：%s'
   LoggerInfo: '日志等级为：%s'
@@ -15,3 +17,6 @@ Enable:
   SlimeWorldManagerYes: '成功'
   SlimeWorldManagerNo: '失败'
   SlimeWorldManagerSuccess: '对SlimeWorldManager引导失败，将使用Bukkit进行世界构建！'
+  PreloadWorldSize: '当前需要预载世界数量为：%s'
+  PreloadBuildStart: '正在预载世界中...'
+  PreloadBuildEnd: '预载世界结束！新追加预载世界列表为：%s'

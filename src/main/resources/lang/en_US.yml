@@ -2,6 +2,8 @@ Load:
   PreloadSetting: 'Preloading the configuration file! '
   PreloadData: 'Preloading data files!'
 Enable:
+  Start: 'starting...'
+  End: 'over! '
   Language: 'System language: English'
   Database: 'Database type is %s'
   LoggerInfo: 'The log level is: %s'
@@ -15,3 +17,6 @@ Enable:
   SlimeWorldManagerYes: 'Success'
   SlimeWorldManagerNo: 'Failed'
   SlimeWorldManagerSuccess: 'Failed to guide SlimeWorldManager, Bukkit will be used to build the world! '
+  PreloadWorldSize: 'The number of worlds currently required to be preloaded is: %s'
+  PreloadBuildStart: 'Preloading the world...'
+  PreloadBuildEnd: 'The preload world is over! The newly added pre-loaded world list is: %s'
