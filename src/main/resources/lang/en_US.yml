@@ -23,3 +23,11 @@ Enable:
 Command:
   logger:
     NoConsole: 'This command is only available in the background! Please use the background to execute this command. '
+    Prompt: 'Already set up! The log levels you can currently see are as follows:'
+    VERBOSE: 'Detailed level output example'
+    FINEST: 'The best level output example'
+    FINE: 'Fine level output example'
+    INFO: 'Example of information level output'
+    WARN: 'Sample warning level output'
+    ERROR: 'Example of wrong level output'
+    FATAL: 'Example of fatal level output'

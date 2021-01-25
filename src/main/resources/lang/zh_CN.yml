@@ -23,3 +23,11 @@ Enable:
 Command:
   logger:
     NoConsole: '该命令仅后台可用！请使用后台执行此命令。'
+    Prompt: '已经设置完成！您当前可以看到的日志等级如下：'
+    VERBOSE: '详细的级别输出示例'
+    FINEST: '最好的的级别输出示例'
+    FINE: '精细的级别输出示例'
+    INFO: '信息的级别输出示例'
+    WARN: '警告的级别输出示例'
+    ERROR: '错误的级别输出示例'
+    FATAL: '致命的级别输出示例'

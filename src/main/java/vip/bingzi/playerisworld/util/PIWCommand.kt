@@ -56,14 +56,14 @@ class PIWCommand : BaseMainCommand() {
                 "FATAL" -> TLogger.FATAL
                 else -> TLogger.INFO
             }
-            PlayerIsWorldPro.plugin.logger.info("您当前可以看到的日志等级如下：")
-            PIWObject.logger.verbose("INFO 级别输出")
-            PIWObject.logger.finest("FINEST 级别输出")
-            PIWObject.logger.fine("FINE 级别输出")
-            PIWObject.logger.info("INFO 级别输出")
-            PIWObject.logger.warn("WARN 级别输出")
-            PIWObject.logger.error("ERROR 级别输出")
-            PIWObject.logger.fatal("FATAL 级别输出")
+            PlayerIsWorldPro.plugin.logger.info(TLocale.asString("Command.logger.Prompt"))
+            PIWObject.logger.verbose(TLocale.asString("Command.logger.VERBOSE"))
+            PIWObject.logger.finest(TLocale.asString("Command.logger.FINEST"))
+            PIWObject.logger.fine(TLocale.asString("Command.logger.FINE"))
+            PIWObject.logger.info(TLocale.asString("Command.logger.INFO"))
+            PIWObject.logger.warn(TLocale.asString("Command.logger.WARN"))
+            PIWObject.logger.error(TLocale.asString("Command.logger.ERROR"))
+            PIWObject.logger.fatal(TLocale.asString("Command.logger.FATAL"))
         }
     }
 }
