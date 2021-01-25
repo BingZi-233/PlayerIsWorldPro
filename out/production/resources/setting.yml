@@ -15,6 +15,16 @@ Database:
     Collection: "PlayerIsWorld"
 # 设置
 Settings:
+  # 可选项目
+  # VERBOSE   ->    详细
+  # FINEST    ->    最好的
+  # FINE      ->    精细
+  # INFO      ->    信息
+  # WARN      ->    警告
+  # ERROR     ->    错误
+  # FATAL     ->    致命
+  # []        ->    默认【INFO】
+  Logger: INFO
   # 针对于SlimeWorldManager插件的兼容设置
   SlimeWorldManager:
     # 数据库
@@ -34,3 +44,12 @@ Settings:
     NameLength: 15
     # 预载世界前缀（仅接受小写）
     Prefix: "playerisworld"
+    WorldSetting:
+      # 开服是否载入
+      readOnly: true
+      allowMonsters: false
+      allowAnimals: false
+      difficulty: easy
+      pvp: false
+      environment: NORMAL
+      worldType: default

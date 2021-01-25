@@ -2,17 +2,19 @@ package vip.bingzi.playerisworld.util
 
 import com.grinderwolf.swm.api.world.properties.SlimeProperties
 import com.grinderwolf.swm.api.world.properties.SlimePropertyMap
+import io.izzel.taboolib.module.locale.logger.TLoggerManager
 import org.bukkit.entity.Player
 import vip.bingzi.playerisworld.PlayerIsWorldPro
 import vip.bingzi.playerisworld.database.Database
-import java.util.logging.Logger
 
 object PIWObject {
     // 日志
-    val logger: Logger = PlayerIsWorldPro.plugin.logger
+//    val logger: Logger = PlayerIsWorldPro.plugin.logger
+//    val logger: PIWLogger = PIWLogger()
+    val logger = TLoggerManager.getLogger(PlayerIsWorldPro.plugin)
 
     // 仅对内部可见，方式从外部更改了加载方式
-    private lateinit var database: Database
+    lateinit var database: Database
 
     /**
      * 获取预载世界列表

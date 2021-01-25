@@ -7,16 +7,16 @@ import io.izzel.taboolib.loader.Plugin
 import io.izzel.taboolib.module.config.TConfig
 import io.izzel.taboolib.module.inject.TInject
 import io.izzel.taboolib.module.locale.TLocale
+import io.izzel.taboolib.module.locale.logger.TLogger
 import org.bukkit.Bukkit
 import vip.bingzi.playerisworld.database.DatabaseLocale
 import vip.bingzi.playerisworld.database.DatabaseMongoDB
-import vip.bingzi.playerisworld.logger.PIWLogger
 import vip.bingzi.playerisworld.util.PIWObject
+import vip.bingzi.playerisworld.util.PIWObject.database
 import vip.bingzi.playerisworld.util.PIWObject.logger
 import vip.bingzi.playerisworld.world.PIWWorld
 import vip.bingzi.playerisworld.world.WorldBukkit
 import vip.bingzi.playerisworld.world.WorldSlimeWorldManager
-import java.util.logging.Level
 
 object PlayerIsWorldPro : Plugin() {
     // 配置文件释放
@@ -36,7 +36,6 @@ object PlayerIsWorldPro : Plugin() {
 
     // 这个值在没有SlimeWorldManager的时候是不会被初始化的。
     lateinit var BuildModel: SlimePropertyMap
-    val DEBUG = PIWLogger("DEBUG", 1500)
 
     // 世界载入方式
     lateinit var BuildWorld: PIWWorld
@@ -44,22 +43,25 @@ object PlayerIsWorldPro : Plugin() {
     }
 
     override fun onEnable() {
-        logger.info(TLocale.asString("Enable.Start"))
         // 设置日志输出等级
         logger.level = when (setting.getString("Settings.Logger")) {
-            "INFO" -> Level.INFO
-            "ALL" -> Level.ALL
-            "OFF" -> Level.OFF
-            "SEVERE" -> Level.SEVERE
-            else -> Level.INFO
+            "VERBOSE" -> TLogger.VERBOSE
+            "FINEST" -> TLogger.FINEST
+            "FINE" -> TLogger.FINE
+            "INFO" -> TLogger.INFO
+            "WARN" -> TLogger.WARN
+            "ERROR" -> TLogger.ERROR
+            "FATAL" -> TLogger.FATAL
+            else -> TLogger.INFO
         }
-        logger.info(TLocale.asString("Enable.LoggerInfo").format(logger.level.name))
+        logger.info(TLocale.asString("Enable.Start"))
+        logger.info(TLocale.asString("Enable.LoggerInfo").format(logger.level))
         // 输出系统语言环境
         logger.info(TLocale.asString("Enable.Language"))
         // 输出数据库使用类型
         logger.info(TLocale.asString("Enable.Database").format(setting.getString("Database.Type")))
         // 引导本地数据库使用类型，避免出现大量IF语句
-        when (setting.getString("Database.Type")) {
+        database = when (setting.getString("Database.Type")) {
             "LOCAL" -> DatabaseLocale()
             "ONLINE" -> DatabaseMongoDB()
             else -> DatabaseLocale()
@@ -82,7 +84,7 @@ object PlayerIsWorldPro : Plugin() {
             try {
                 SlimeLoader = SlimeWorldManager.getLoader(set)
             } catch (e: Exception) {
-                logger.warning(TLocale.asString("Enable.SlimeWorldManagerDatabaseError").format(set))
+                logger.warn(TLocale.asString("Enable.SlimeWorldManagerDatabaseError").format(set))
                 // 移除当前已经尝试的方法
                 setBack.remove(set)
                 // 悲观情况，大概率其他两种也无法正常运行
@@ -90,7 +92,7 @@ object PlayerIsWorldPro : Plugin() {
                 // 尝试使用另外两种方法进行操作
                 for (back in setBack) {
                     try {
-                        logger.warning(TLocale.asString("Enable.SlimeWorldManagerTryDatabase").format(back))
+                        logger.warn(TLocale.asString("Enable.SlimeWorldManagerTryDatabase").format(back))
                         // 尝试进行注册
                         SlimeLoader = SlimeWorldManager.getLoader(back)
                     } catch (e: Exception) {
@@ -119,7 +121,7 @@ object PlayerIsWorldPro : Plugin() {
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildModerInfo"))
                 BuildWorld = WorldSlimeWorldManager()
             } else {
-                logger.severe(TLocale.asString("Enable.SlimeWorldManagerSuccess"))
+                logger.warn(TLocale.asString("Enable.SlimeWorldManagerSuccess"))
                 BuildWorld = WorldBukkit()
             }
         } else {

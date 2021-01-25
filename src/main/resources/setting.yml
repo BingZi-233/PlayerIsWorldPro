@@ -16,10 +16,14 @@ Database:
 # 设置
 Settings:
   # 可选项目
-  # 1. INFO   -   正常运行的日志
-  # 3. ALL    -   全部日志情况
-  # 4. OFF    -   关闭所有日志
-  # 5. SEVERE -   仅十分严重的日志
+  # VERBOSE   ->    详细
+  # FINEST    ->    最好的
+  # FINE      ->    精细
+  # INFO      ->    信息
+  # WARN      ->    警告
+  # ERROR     ->    错误
+  # FATAL     ->    致命
+  # []        ->    默认【INFO】
   Logger: INFO
   # 针对于SlimeWorldManager插件的兼容设置
   SlimeWorldManager:
