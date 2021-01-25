@@ -20,3 +20,6 @@ Enable:
   PreloadWorldSize: '当前需要预载世界数量为：%s'
   PreloadBuildStart: '正在预载世界中...'
   PreloadBuildEnd: '预载世界结束！新追加预载世界列表为：%s'
+Command:
+  logger:
+    NoConsole: '该命令仅后台可用！请使用后台执行此命令。'

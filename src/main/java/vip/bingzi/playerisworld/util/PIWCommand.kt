@@ -1,11 +1,12 @@
-package vip.bingzi.playerisworld.command
+package vip.bingzi.playerisworld.util
 
 import io.izzel.taboolib.module.command.base.*
+import io.izzel.taboolib.module.locale.TLocale
 import io.izzel.taboolib.module.locale.logger.TLogger
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import vip.bingzi.playerisworld.util.PIWObject
+import vip.bingzi.playerisworld.PlayerIsWorldPro
 
 @BaseCommand(name = "PlayerIsWorldPro", aliases = ["playerisworldpro", "PIW", "piw"], permission = "playerisworld.use")
 class PIWCommand : BaseMainCommand() {
@@ -13,9 +14,6 @@ class PIWCommand : BaseMainCommand() {
         return "PlayerIsWorldPro Command"
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        return true
-    }
     @SubCommand
     var teleport: BaseSubCommand = object : BaseSubCommand() {
         override fun getDescription(): String {
@@ -28,11 +26,10 @@ class PIWCommand : BaseMainCommand() {
 
         override fun onCommand(p0: CommandSender, p1: Command, p2: String, p3: Array<out String>) {
             if (p0 is Player) {
-                TODO("玩家传送逻辑")
+                return
             }
         }
     }
-
     @SubCommand
     var logger: BaseSubCommand = object : BaseSubCommand() {
         override fun getDescription(): String {
@@ -40,12 +37,16 @@ class PIWCommand : BaseMainCommand() {
         }
 
         override fun getArguments(): Array<Argument> {
-            return arrayOf(Argument("等级", false))
+            return arrayOf(Argument("等级"))
         }
 
         override fun onCommand(p0: CommandSender, p1: Command, p2: String, p3: Array<out String>) {
+            if (p0 is Player){
+                TLocale.sendTo(p0,TLocale.asString("Command.logger.NoConsole"))
+                return
+            }
             // 设置日志输出等级
-            PIWObject.logger.level = when (p3[1]) {
+            PIWObject.logger.level = when (p3[0]) {
                 "VERBOSE" -> TLogger.VERBOSE
                 "FINEST" -> TLogger.FINEST
                 "FINE" -> TLogger.FINE
@@ -55,6 +56,7 @@ class PIWCommand : BaseMainCommand() {
                 "FATAL" -> TLogger.FATAL
                 else -> TLogger.INFO
             }
+            PlayerIsWorldPro.plugin.logger.info("您当前可以看到的日志等级如下：")
             PIWObject.logger.verbose("INFO 级别输出")
             PIWObject.logger.finest("FINEST 级别输出")
             PIWObject.logger.fine("FINE 级别输出")

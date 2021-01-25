@@ -20,3 +20,6 @@ Enable:
   PreloadWorldSize: 'The number of worlds currently required to be preloaded is: %s'
   PreloadBuildStart: 'Preloading the world...'
   PreloadBuildEnd: 'The preload world is over! The newly added pre-loaded world list is: %s'
+Command:
+  logger:
+    NoConsole: 'This command is only available in the background! Please use the background to execute this command. '
