@@ -31,3 +31,6 @@ Command:
     WARN: 'Sample warning level output'
     ERROR: 'Example of wrong level output'
     FATAL: 'Example of fatal level output'
+Event:
+  Login:
+    Kick_Other: 'You cannot enter the game because of a world allocation error. Please try again! '

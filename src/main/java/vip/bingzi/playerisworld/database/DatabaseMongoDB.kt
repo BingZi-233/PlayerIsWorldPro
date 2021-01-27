@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
 import vip.bingzi.playerisworld.PlayerIsWorldPro
 
-class DatabaseMongoDB : Database(){
+class DatabaseMongoDB : Database() {
     private val setting = PlayerIsWorldPro.setting
     private val collection = CronusBridge.get(
         setting.getString("Database.Url.Client"),

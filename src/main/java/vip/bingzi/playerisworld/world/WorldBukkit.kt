@@ -5,6 +5,8 @@ import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.scheduler.BukkitRunnable
 import vip.bingzi.playerisworld.PlayerIsWorldPro
+import vip.bingzi.playerisworld.util.PIWObject.addPreloadWorld
+import vip.bingzi.playerisworld.util.PIWObject.logger
 import vip.bingzi.playerisworld.util.PIWUtil
 
 /**
@@ -14,7 +16,7 @@ class WorldBukkit : PIWWorld() {
     /**
      * 构建世界
      */
-    override fun buildWorld(int: Int): ArrayList<String> {
+    override fun buildWorld(int: Int, saveToFile: Boolean): ArrayList<String> {
         val preloadWorld = ArrayList<String>()
         for (i in 1..int) {
             val randomString: String = PlayerIsWorldPro.setting.getString("Settings.PreloadWorld.Prefix") + "_" +
@@ -23,6 +25,11 @@ class WorldBukkit : PIWWorld() {
             Bukkit.unloadWorld(randomString, true)
             preloadWorld.add(randomString)
         }
+        if (saveToFile){
+            logger.fine("[Bukkit - buildWorld]Build -> 写入预载列表如下数据：$preloadWorld")
+            addPreloadWorld(preloadWorld)
+        }
+        logger.fine("[Bukkit - buildWorld]Build -> 返回值：$preloadWorld")
         return preloadWorld
 
     }
@@ -30,17 +37,19 @@ class WorldBukkit : PIWWorld() {
     /**
      * 构建世界（异步）
      */
-    override fun buildWorldSync(int: Int): ArrayList<String> {
+    override fun buildWorldSync(int: Int, saveToFile: Boolean): ArrayList<String> {
         val preloadWorld = ArrayList<String>()
         object : BukkitRunnable() {
             override fun run() {
                 object : BukkitRunnable() {
                     override fun run() {
-                        preloadWorld.addAll(WorldBukkit().buildWorld(int))
+                        preloadWorld.addAll(WorldBukkit().buildWorld(int,saveToFile))
+                        logger.fine("[Bukkit - buildWorldSync]Build(Sync) -> 获得到的列表为：$preloadWorld")
                     }
                 }.runTask(PlayerIsWorldPro.plugin)
             }
         }.runTaskAsynchronously(PlayerIsWorldPro.plugin)
+        logger.fine("[Bukkit - buildWorldSync]Build(Sync) -> 返回值：$preloadWorld")
         return preloadWorld
     }
 

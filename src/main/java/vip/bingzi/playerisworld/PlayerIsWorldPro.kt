@@ -75,12 +75,12 @@ object PlayerIsWorldPro : Plugin() {
                     .format(setting.getString("Settings.SlimeWorldManager.Database.Type"))
             )
             val set = when (setting.getString("Settings.SlimeWorldManager.Database.Type")) {
-                "LOCALE" -> "sqlite"
+                "LOCALE" -> "file"
                 "ONLINE" -> "mongodb"
                 "MYSQL" -> "mysql"
                 else -> "sqlite"
             }
-            val setBack = arrayListOf("sqlite", "mysql", "mongodb")
+            val setBack = arrayListOf("file", "mysql", "mongodb")
             try {
                 SlimeLoader = SlimeWorldManager.getLoader(set)
             } catch (e: Exception) {
@@ -97,7 +97,7 @@ object PlayerIsWorldPro : Plugin() {
                         SlimeLoader = SlimeWorldManager.getLoader(back)
                     } catch (e: Exception) {
                         // 跳过下面代码
-                        logger.info(TLocale.asString("Enable.SlimeWorldManagerNo"))
+                        logger.warn(TLocale.asString("Enable.SlimeWorldManagerNo"))
                         continue
                     }
                     // 如果发现有执行成功的模式，则将状态调整为True
@@ -109,6 +109,7 @@ object PlayerIsWorldPro : Plugin() {
             }
             if (info) {
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildWorld"))
+                logger.fine("正在对BuildModel进行初始化操作")
                 // 对世界模型进行初始化
                 BuildModel = PIWObject.getSlimeBuildModer(
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.allowMonsters"),
@@ -116,7 +117,10 @@ object PlayerIsWorldPro : Plugin() {
                     setting.getString("Settings.PreloadWorld.WorldSetting.difficulty"),
                     setting.getString("Settings.PreloadWorld.WorldSetting.environment"),
                     setting.getBoolean("Settings.PreloadWorld.WorldSetting.pvp"),
-                    setting.getString("Settings.PreloadWorld.WorldSetting.worldType")
+                    setting.getString("Settings.PreloadWorld.WorldSetting.worldType"),
+                    setting.getInt("Settings.PreloadWorld.WorldSetting.Spawn.x"),
+                    setting.getInt("Settings.PreloadWorld.WorldSetting.Spawn.y"),
+                    setting.getInt("Settings.PreloadWorld.WorldSetting.Spawn.z")
                 )
                 logger.info(TLocale.asString("Enable.SlimeWorldManagerBuildModerInfo"))
                 BuildWorld = WorldSlimeWorldManager()
@@ -137,7 +141,7 @@ object PlayerIsWorldPro : Plugin() {
         logger.info(TLocale.asString("Enable.PreloadWorldSize").format(preloadSize))
         logger.info(TLocale.asString("Enable.PreloadBuildStart"))
         // 进行世界生成
-        val buildWorld = BuildWorld.buildWorld(preloadSize)
+        val buildWorld = BuildWorld.buildWorld(preloadSize,false)
         // 将世界名追加到预载世界列表中
         PIWObject.addPreloadWorld(buildWorld)
         logger.info(TLocale.asString("Enable.PreloadBuildEnd").format(buildWorld))

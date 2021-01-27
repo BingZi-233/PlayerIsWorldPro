@@ -9,12 +9,12 @@ abstract class PIWWorld {
     /**
      * 世界构建
      */
-    abstract fun buildWorld(int: Int): ArrayList<String>
+    abstract fun buildWorld(int: Int,saveToFile:Boolean): ArrayList<String>
 
     /**
      * 调度器世界构建
      */
-    abstract fun buildWorldSync(int: Int): ArrayList<String>
+    abstract fun buildWorldSync(int: Int,saveToFile:Boolean): ArrayList<String>
 
     /**
      * 载入世界

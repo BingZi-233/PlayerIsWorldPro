@@ -45,11 +45,22 @@ Settings:
     # 预载世界前缀（仅接受小写）
     Prefix: "playerisworld"
     WorldSetting:
-      # 开服是否载入
+      # 只读
       readOnly: true
+      # 怪物是否可以在这个世界上产生。
       allowMonsters: false
+      # 动物是否可以在这个世界上产生。
       allowAnimals: false
+      # 世界的难度
       difficulty: easy
+      # 如果为true，则将允许在此世界上使用PvP。
       pvp: false
+      # 设置世界环境
       environment: NORMAL
+      # 设置级别类型
       worldType: default
+      # 生成世界坐标
+      Spawn:
+        x: 0
+        y: 255
+        z: 0

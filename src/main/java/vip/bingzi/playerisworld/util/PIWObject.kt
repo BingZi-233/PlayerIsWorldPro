@@ -9,8 +9,6 @@ import vip.bingzi.playerisworld.database.Database
 
 object PIWObject {
     // 日志
-//    val logger: Logger = PlayerIsWorldPro.plugin.logger
-//    val logger: PIWLogger = PIWLogger()
     val logger = TLoggerManager.getLogger(PlayerIsWorldPro.plugin)
 
     // 仅对内部可见，方式从外部更改了加载方式
@@ -78,8 +76,11 @@ object PIWObject {
         environment: String?,
         pvp: Boolean,
         worldType: String?,
+        spawnX: Int,
+        SpawnY: Int,
+        SpawnZ: Int,
     ): SlimePropertyMap {
-        PlayerIsWorldPro.setting.release()
+        logger.fine("构建模型参数信息为：$allowMonsters,$allowAnimals,$difficulty,$environment,$pvp,$worldType,X:$spawnX,Y:$SpawnY,Z:$SpawnZ")
         // 对世界模板进行设置
         val slimePropertyMap = SlimePropertyMap()
         // 设置世界模板会不会生成怪物
@@ -94,6 +95,10 @@ object PIWObject {
         slimePropertyMap.setString(SlimeProperties.ENVIRONMENT, environment)
         // 设置世界模板世界生成方式
         slimePropertyMap.setString(SlimeProperties.WORLD_TYPE, worldType)
+        // 设置世界模板世界坐标
+        slimePropertyMap.setInt(SlimeProperties.SPAWN_X, spawnX)
+        slimePropertyMap.setInt(SlimeProperties.SPAWN_Y, SpawnY)
+        slimePropertyMap.setInt(SlimeProperties.SPAWN_Z, SpawnZ)
         return slimePropertyMap
     }
 }
