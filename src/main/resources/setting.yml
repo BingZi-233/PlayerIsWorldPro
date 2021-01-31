@@ -35,8 +35,6 @@ Settings:
       # 3.ONLINE  -   一种便捷快速的存储方式
       # 4.[ ]     -   缺省，将会使用本地储存
       Type: LOCALE
-    # 世界
-    World:
   PreloadWorld:
     # 最大预载数量
     Max: 5
@@ -64,3 +62,7 @@ Settings:
         x: 0
         y: 255
         z: 0
+  WorldList:
+    - "world"
+    - "world_nether"
+    - "world_the_end"

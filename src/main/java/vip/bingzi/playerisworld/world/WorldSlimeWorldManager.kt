@@ -35,7 +35,7 @@ class WorldSlimeWorldManager : PIWWorld() {
             }
             preloadWorld.add(randomString)
         }
-        if (saveToFile){
+        if (saveToFile) {
             logger.fine("[SlimeWorldManager - buildWorld]Build -> 写入预载列表如下数据：$preloadWorld")
             PIWObject.addPreloadWorld(preloadWorld)
         }
@@ -49,7 +49,7 @@ class WorldSlimeWorldManager : PIWWorld() {
             override fun run() {
                 object : BukkitRunnable() {
                     override fun run() {
-                        preloadWorld.addAll(WorldSlimeWorldManager().buildWorld(int,saveToFile))
+                        preloadWorld.addAll(WorldSlimeWorldManager().buildWorld(int, saveToFile))
                         logger.fine("[SlimeWorldManager - buildWorldSync]Build(Sync) -> 获得到的列表为：$preloadWorld")
                     }
                 }.runTask(PlayerIsWorldPro.plugin)
@@ -59,7 +59,8 @@ class WorldSlimeWorldManager : PIWWorld() {
         return preloadWorld
     }
 
-    override fun loadWorld(worldName: String) {
+    override fun loadWorld(worldName: String): Any {
+        var result = false
         try {
             val builderWorld = PlayerIsWorldPro.SlimeWorldManager?.loadWorld(SlimeLoader,
                 worldName,
@@ -82,12 +83,15 @@ class WorldSlimeWorldManager : PIWWorld() {
                 }
                 is WorldInUseException -> {
                     logger.fine("发现异常！原因：世界正在使用。")
+                    result = true
                 }
             }
         }
+        return result
     }
 
-    override fun loadWorldSync(worldName: String) {
+    override fun loadWorldSync(worldName: String): Any {
+        var result = false
         object : BukkitRunnable() {
             override fun run() {
                 object : BukkitRunnable() {
@@ -114,6 +118,7 @@ class WorldSlimeWorldManager : PIWWorld() {
                                 }
                                 is WorldInUseException -> {
                                     logger.fine("发现异常！原因：世界正在使用。")
+                                    result = true
                                 }
                             }
                         }
@@ -121,6 +126,7 @@ class WorldSlimeWorldManager : PIWWorld() {
                 }.runTask(PlayerIsWorldPro.plugin)
             }
         }.runTaskAsynchronously(PlayerIsWorldPro.plugin)
+        return result
     }
 
     override fun unloadWorld(world: World) {

@@ -34,3 +34,4 @@ Command:
 Event:
   Login:
     Kick_Other: 'You cannot enter the game because of a world allocation error. Please try again! '
+      KICK_OTHER: 'Your world has been loaded in another world, please log out and try to log in again'

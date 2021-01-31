@@ -54,19 +54,19 @@ object PIWObject {
     /**
      * 获取玩家数据
      */
-    fun getIntegral(player: Player?): Any? {
+    fun getIntegral(player: Player?, node: String): Any? {
         // 获取对应玩家的数据库
         val download = database.download(player!!)
         // 如果未查询到玩家世界，则返回false
-        return download["PlayerIsWorld.List.WorldName", null]
+        return download["PlayerIsWorld.$node", null]
     }
 
     /**
      * 设置玩家数据
      */
-    fun setIntegral(player: Player?, WorldName: String) {
+    fun setIntegral(player: Player?, node: String, value: String) {
         val download = database.download(player!!)
-        download["PlayerIsWorld.List.WorldName"] = WorldName
+        download["PlayerIsWorld.$node"] = value
     }
 
     fun getSlimeBuildModer(
