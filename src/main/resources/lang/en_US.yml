@@ -35,3 +35,5 @@ Event:
   Login:
     Kick_Other: 'You cannot enter the game because of a world allocation error. Please try again! '
       KICK_OTHER: 'Your world has been loaded in another world, please log out and try to log in again'
+Warn:
+  CommandParameterError: 'The parameter you entered does not meet expectations, please check whether the command you entered is correct! '

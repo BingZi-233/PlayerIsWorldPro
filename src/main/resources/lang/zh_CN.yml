@@ -35,3 +35,5 @@ Event:
   Login:
     Kick_Other: '因为世界分配出现错误，导致您无法进入游戏。请重试！'
     KICK_OTHER: '您的世界已经在其他世界中载入，请退出后再次进行尝试登录'
+Warn:
+  CommandParameterError: '您输入的参数不符合预期，请检查您所输入的命令是否正确！'

@@ -20,8 +20,10 @@ object PIWEvent : Listener {
     @EventHandler
     fun onPlayerLogin(playerLoginEvent: PlayerLoginEvent) {
         val player = playerLoginEvent.player
+        // 如果玩家在常驻世界列表，则不需要立刻进行世界加载
         for (world in PlayerIsWorldPro.setting.getStringList("Settings.WorldList")) {
             if (player.world.name == world) {
+                logger.fine("玩家${player.name}所在世界为：${player.world.name}，此世界属于常驻世界。无需进行立刻加载！")
                 return
             }
         }
@@ -54,7 +56,7 @@ object PIWEvent : Listener {
     @EventHandler
     fun onPlayerQuit(playerQuitEvent: PlayerQuitEvent) {
         val player = playerQuitEvent.player
-        val integral: String = getIntegral(player, "WorldName") as String
+        val integral = getIntegral(player, "WorldName") as String
         logger.fine("Quit -> 获取到的世界名称为：$integral")
         PlayerIsWorldPro.BuildWorld.unloadWorld(integral)
     }
@@ -67,6 +69,5 @@ object PIWEvent : Listener {
         if (fromWorldName == toWorldName) {
             return
         }
-
     }
 }
