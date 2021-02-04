@@ -20,13 +20,6 @@ object PIWEvent : Listener {
     @EventHandler
     fun onPlayerLogin(playerLoginEvent: PlayerLoginEvent) {
         val player = playerLoginEvent.player
-        // 如果玩家在常驻世界列表，则不需要立刻进行世界加载
-        for (world in PlayerIsWorldPro.setting.getStringList("Settings.WorldList")) {
-            if (player.world.name == world) {
-                logger.fine("玩家${player.name}所在世界为：${player.world.name}，此世界属于常驻世界。无需进行立刻加载！")
-                return
-            }
-        }
         // 玩家世界名字
         val integral = when (val integral: Any? = getIntegral(player, "WorldName")) {
             null -> {
@@ -42,8 +35,16 @@ object PIWEvent : Listener {
             is String -> integral
             else -> integral
         }.toString()
+//      如果玩家在常驻世界列表，则不需要立刻进行世界加载
+        for (world in PlayerIsWorldPro.setting.getStringList("Settings.WorldList")) {
+            if (player.world.name == world) {
+                logger.fine("玩家${player.name}所在世界为：${player.world.name}，此世界属于常驻世界。无需进行立刻加载！")
+                return
+            }
+        }
         logger.fine("Login -> 获取到的世界名称为：$integral")
         val loadWorldSync = PlayerIsWorldPro.BuildWorld.loadWorldSync(integral)
+        logger.fine("[PIWEvent - onPlayerLogin]loadWorldSync -> 世界载入结果：$loadWorldSync")
         if (loadWorldSync as Boolean){
             if (loadWorldSync){
                 playerLoginEvent.kickMessage = TLocale.asString("Event.Login.KICK_OTHER")

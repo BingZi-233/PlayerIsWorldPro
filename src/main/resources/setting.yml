@@ -43,7 +43,7 @@ Settings:
     # 预载世界前缀（仅接受小写）
     Prefix: "playerisworld"
     WorldSetting:
-      # 只读
+      # 只读，没事不要动这个选项
       readOnly: true
       # 怪物是否可以在这个世界上产生。
       allowMonsters: false

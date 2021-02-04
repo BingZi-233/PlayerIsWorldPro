@@ -67,6 +67,7 @@ class WorldSlimeWorldManager : PIWWorld() {
                 false,
                 BuildModel)
             PlayerIsWorldPro.SlimeWorldManager?.generateWorld(builderWorld)
+            logger.fine("[SlimeWorldManager - loadWorld]loadWorld -> 正在尝试进行世界构建")
         } catch (e: Exception) {
             when (e) {
                 is UnknownWorldException -> {
@@ -102,6 +103,7 @@ class WorldSlimeWorldManager : PIWWorld() {
                                 false,
                                 BuildModel)!!
                             PlayerIsWorldPro.SlimeWorldManager.generateWorld(builderWorld)
+                            logger.fine("[SlimeWorldManager - loadWorld]loadWorld(Sync) -> 正在尝试进行世界构建")
                         } catch (e: Exception) {
                             when (e) {
                                 is UnknownWorldException -> {
