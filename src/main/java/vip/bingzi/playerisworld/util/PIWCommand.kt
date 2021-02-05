@@ -41,9 +41,9 @@ class PIWCommand : BaseMainCommand() {
                         return
                     }
                 }
-                object : BukkitRunnable(){
+                object : BukkitRunnable() {
                     override fun run() {
-                        object :BukkitRunnable(){
+                        object : BukkitRunnable() {
                             override fun run() {
                                 logger.fine("正在对 $integral 进行加载，并将${p0.name}传送至此世界！")
                                 if (PlayerIsWorldPro.BuildWorld.loadWorld(integral) as Boolean) {
@@ -117,7 +117,7 @@ class PIWCommand : BaseMainCommand() {
                 }
                 "world" -> {
                     logger.info("Preload World List[Size:${getPreloadWorld().size}]:")
-                    for (PreloadWorldName in getPreloadWorld()){
+                    for (PreloadWorldName in getPreloadWorld()) {
                         logger.info("-> $PreloadWorldName")
                     }
                     for (player in Bukkit.getOnlinePlayers()) {

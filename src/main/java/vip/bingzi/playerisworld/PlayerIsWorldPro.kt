@@ -141,7 +141,7 @@ object PlayerIsWorldPro : Plugin() {
         logger.info(TLocale.asString("Enable.PreloadWorldSize").format(preloadSize))
         logger.info(TLocale.asString("Enable.PreloadBuildStart"))
         // 进行世界生成
-        val buildWorld = BuildWorld.buildWorld(preloadSize,false)
+        val buildWorld = BuildWorld.buildWorld(preloadSize, false)
         // 将世界名追加到预载世界列表中
         PIWObject.addPreloadWorld(buildWorld)
         logger.info(TLocale.asString("Enable.PreloadBuildEnd").format(buildWorld))

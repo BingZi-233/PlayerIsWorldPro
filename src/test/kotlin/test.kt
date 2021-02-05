@@ -1,5 +1,0 @@
-class test {
-    fun main(){
-
-    }
-}

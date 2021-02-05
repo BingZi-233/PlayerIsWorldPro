@@ -25,7 +25,7 @@ class WorldBukkit : PIWWorld() {
             Bukkit.unloadWorld(randomString, true)
             preloadWorld.add(randomString)
         }
-        if (saveToFile){
+        if (saveToFile) {
             logger.fine("[Bukkit - buildWorld]Build -> 写入预载列表如下数据：$preloadWorld")
             addPreloadWorld(preloadWorld)
         }
@@ -43,7 +43,7 @@ class WorldBukkit : PIWWorld() {
             override fun run() {
                 object : BukkitRunnable() {
                     override fun run() {
-                        preloadWorld.addAll(WorldBukkit().buildWorld(int,saveToFile))
+                        preloadWorld.addAll(WorldBukkit().buildWorld(int, saveToFile))
                         logger.fine("[Bukkit - buildWorldSync]Build(Sync) -> 获得到的列表为：$preloadWorld")
                     }
                 }.runTask(PlayerIsWorldPro.plugin)

@@ -32,8 +32,8 @@ Command:
     ERROR: '错误的级别输出示例'
     FATAL: '致命的级别输出示例'
   Teleport:
-    ErrorTitle : '传送错误'
-    ErrorSubTitle  : '世界已锁定'
+    ErrorTitle: '传送错误'
+    ErrorSubTitle: '世界已锁定'
 Event:
   Login:
     Kick_Other: '因为世界分配出现错误，导致您无法进入游戏。请重试！'

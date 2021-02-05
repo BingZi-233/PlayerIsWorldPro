@@ -45,8 +45,8 @@ object PIWEvent : Listener {
         logger.fine("Login -> 获取到的世界名称为：$integral")
         val loadWorldSync = PlayerIsWorldPro.BuildWorld.loadWorldSync(integral)
         logger.fine("[PIWEvent - onPlayerLogin]loadWorldSync -> 世界载入结果：$loadWorldSync")
-        if (loadWorldSync as Boolean){
-            if (loadWorldSync){
+        if (loadWorldSync as Boolean) {
+            if (loadWorldSync) {
                 playerLoginEvent.kickMessage = TLocale.asString("Event.Login.KICK_OTHER")
                 playerLoginEvent.result = PlayerLoginEvent.Result.KICK_OTHER
             }
